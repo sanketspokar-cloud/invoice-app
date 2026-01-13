@@ -10,14 +10,13 @@
 
 <h2>Sales Invoice Generator</h2>
 
-<!-- INPUT FORM -->
 <div class="form">
   <input id="invNo" placeholder="Invoice No">
   <input id="invDate" type="date">
   <input id="custName" placeholder="Customer Name">
   <input id="custGST" placeholder="Customer GSTIN">
   <input id="custAddr" placeholder="Customer Address">
-  <input id="gstRate" type="number" placeholder="GST Rate % (eg: 18)">
+  <input id="gstRateInput" type="number" placeholder="GST Rate % (eg: 18)">
 
   <h3>Items</h3>
 
@@ -44,30 +43,25 @@
 
 <hr>
 
-<!-- INVOICE -->
 <div id="invoice">
 
   <div class="header">
     <div>
-      <img src="logo.png" class="logo">
       <h3>Shankar Industries</h3>
-      <p>Plot no 7, Venkatesh Agro Industrial Area<br>Dharmabad – 431809</p>
+      <p>Plot no 7, Venkatesh Agro Industrial Area Dharmabad – 431809</p>
       <p><b>GSTIN:</b> 27BAOPP6429B1ZI</p>
     </div>
-
     <div class="right">
       <h2>TAX INVOICE</h2>
-      <p><b>Invoice No:</b> <span id="iinv"></span></p>
-      <p><b>Date:</b> <span id="idate"></span></p>
+      <p><b>Invoice No:</b> <span id="invOut"></span></p>
+      <p><b>Date:</b> <span id="dateOut"></span></p>
     </div>
   </div>
 
-  <hr>
-
   <p><b>Bill To:</b></p>
-  <p id="icust"></p>
-  <p id="icaddr"></p>
-  <p><b>GSTIN:</b> <span id="icgst"></span></p>
+  <p id="custOut"></p>
+  <p id="addrOut"></p>
+  <p><b>GSTIN:</b> <span id="gstOut"></span></p>
 
   <table>
     <thead>
@@ -79,45 +73,23 @@
         <th>Amount</th>
       </tr>
     </thead>
-    <tbody id="rows"></tbody>
+    <tbody id="itemRows"></tbody>
   </table>
 
   <div class="totals">
     <table>
-      <tr>
-        <td>Taxable Value</td>
-        <td id="taxable"></td>
-      </tr>
-      <tr id="cgstRow">
-        <td>CGST</td>
-        <td id="cgst"></td>
-      </tr>
-      <tr id="sgstRow">
-        <td>SGST</td>
-        <td id="sgst"></td>
-      </tr>
-      <tr id="igstRow">
-        <td>IGST</td>
-        <td id="igst"></td>
-      </tr>
-      <tr class="grand">
-        <td>Grand Total</td>
-        <td id="grand"></td>
-      </tr>
+      <tr><td>Taxable Value</td><td id="taxableOut"></td></tr>
+      <tr id="cgstRow"><td>CGST</td><td id="cgstOut"></td></tr>
+      <tr id="sgstRow"><td>SGST</td><td id="sgstOut"></td></tr>
+      <tr id="igstRow"><td>IGST</td><td id="igstOut"></td></tr>
+      <tr class="grand"><td>Grand Total</td><td id="grandOut"></td></tr>
     </table>
-  </div>
-
-  <div class="footer">
-    <p><b>For ABC Traders</b></p>
-    <br><br>
-    <p>Authorized Signatory</p>
-    <p class="note">This is a computer-generated invoice.</p>
   </div>
 
 </div>
 
 <button onclick="previewPDF()">Preview PDF</button>
-<button onclick="savePDF()">Save Final Invoice</button>
+<button onclick="savePDF()">Save PDF</button>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
