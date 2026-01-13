@@ -1,74 +1,10 @@
-body {
-  font-family: Arial;
-  padding: 10px;
-}
+body { font-family: Arial; padding: 10px; }
+input { width: 95%; margin: 5px 0; padding: 5px; }
+.item { border: 1px solid #ccc; padding: 5px; margin-bottom: 5px; }
+.center { text-align: center; }
 
-.form input {
-  width: 95%;
-  margin: 6px 0;
-  padding: 6px;
-}
+table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+table, th, td { border: 1px solid black; text-align: center; padding: 5px; }
 
-.item {
-  border: 1px solid #ccc;
-  padding: 6px;
-  margin-bottom: 6px;
-}
-
-#invoice {
-  border: 1px solid #000;
-  padding: 15px;
-  margin-top: 15px;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.logo {
-  max-width: 120px;
-}
-
-.right {
-  text-align: right;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-table, th, td {
-  border: 1px solid black;
-}
-
-th, td {
-  padding: 6px;
-  text-align: center;
-}
-
-.totals {
-  width: 40%;
-  float: right;
-  margin-top: 10px;
-}
-
-.totals td {
-  text-align: right;
-}
-
-.grand {
-  font-weight: bold;
-}
-
-.footer {
-  clear: both;
-  margin-top: 40px;
-  text-align: right;
-}
-
-.note {
-  font-size: 12px;
-}
+.summary { width: 50%; margin-left: auto; }
+.grand { font-weight: bold; }
