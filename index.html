@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Offline Sales Invoice</title>
+  <title>GST Tax Invoice</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
 </head>
 <body>
 
@@ -16,23 +16,25 @@
   <input id="invDate" type="date">
   <input id="custName" placeholder="Customer Name">
   <input id="custGST" placeholder="Customer GSTIN">
+  <input id="custAddr" placeholder="Customer Address">
+  <input id="gstRate" type="number" placeholder="GST Rate % (eg: 18)">
 
   <h3>Items</h3>
 
   <div class="item">
-    <input type="checkbox" id="aCheck"> Mirchi Powder
+    <label><input type="checkbox" id="aCheck"> Mirchi Powder</label>
     <input type="number" id="aQty" placeholder="Qty">
     <input type="number" id="aRate" placeholder="Rate">
   </div>
 
   <div class="item">
-    <input type="checkbox" id="bCheck"> Haldi Powder
+    <label><input type="checkbox" id="bCheck"> Haldi Powder</label>
     <input type="number" id="bQty" placeholder="Qty">
     <input type="number" id="bRate" placeholder="Rate">
   </div>
 
   <div class="item">
-    <input type="checkbox" id="cCheck"> Dhaniya Powder
+    <label><input type="checkbox" id="cCheck"> Dhaniya Powder</label>
     <input type="number" id="cQty" placeholder="Qty">
     <input type="number" id="cRate" placeholder="Rate">
   </div>
@@ -42,22 +44,36 @@
 
 <hr>
 
-<!-- INVOICE TEMPLATE -->
+<!-- INVOICE -->
 <div id="invoice">
-  <h2 class="center">TAX INVOICE</h2>
 
-  <p>Seller: Shankar Industries</p>
-  <p>GSTIN: 27BAOPP6429B1ZI</p>
+  <div class="header">
+    <div>
+      <img src="logo.png" class="logo">
+      <h3>Shankar Industries</h3>
+      <p>Plot no 7, Venkatesh Agro Industrial Area<br>Dharmabad – 431809</p>
+      <p><b>GSTIN:</b> 27BAOPP6429B1ZI</p>
+    </div>
 
-  <p>Customer: <span id="icust"></span></p>
-  <p>GSTIN: <span id="icgst"></span></p>
-  <p>Invoice No: <span id="iinv"></span></p>
-  <p>Date: <span id="idate"></span></p>
+    <div class="right">
+      <h2>TAX INVOICE</h2>
+      <p><b>Invoice No:</b> <span id="iinv"></span></p>
+      <p><b>Date:</b> <span id="idate"></span></p>
+    </div>
+  </div>
+
+  <hr>
+
+  <p><b>Bill To:</b></p>
+  <p id="icust"></p>
+  <p id="icaddr"></p>
+  <p><b>GSTIN:</b> <span id="icgst"></span></p>
 
   <table>
     <thead>
       <tr>
         <th>Description</th>
+        <th>HSN</th>
         <th>Qty</th>
         <th>Rate</th>
         <th>Amount</th>
@@ -66,7 +82,38 @@
     <tbody id="rows"></tbody>
   </table>
 
-  <h3>Total ₹ <span id="itotal"></span></h3>
+  <div class="totals">
+    <table>
+      <tr>
+        <td>Taxable Value</td>
+        <td id="taxable"></td>
+      </tr>
+      <tr id="cgstRow">
+        <td>CGST</td>
+        <td id="cgst"></td>
+      </tr>
+      <tr id="sgstRow">
+        <td>SGST</td>
+        <td id="sgst"></td>
+      </tr>
+      <tr id="igstRow">
+        <td>IGST</td>
+        <td id="igst"></td>
+      </tr>
+      <tr class="grand">
+        <td>Grand Total</td>
+        <td id="grand"></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="footer">
+    <p><b>For ABC Traders</b></p>
+    <br><br>
+    <p>Authorized Signatory</p>
+    <p class="note">This is a computer-generated invoice.</p>
+  </div>
+
 </div>
 
 <button onclick="previewPDF()">Preview PDF</button>
@@ -78,4 +125,3 @@
 
 </body>
 </html>
-
