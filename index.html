@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>GST Invoice</title>
+  <title>GST Tax Invoice</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -10,31 +10,50 @@
 
 <h2>Sales Invoice Generator</h2>
 
-<input id="invNo" placeholder="Invoice No">
-<input id="invDate" type="date">
-<input id="custName" placeholder="Customer Name">
-<input id="custGST" placeholder="Customer GSTIN">
-<input id="gstRate" type="number" placeholder="GST Rate %">
+<div class="form">
+  <input id="invNo" placeholder="Invoice No">
+  <input id="invDate" type="date">
+  <input id="custName" placeholder="Customer Name">
+  <input id="custGST" placeholder="Customer GSTIN">
+  <input id="custAddr" placeholder="Customer Address">
+  <input id="gstRateInput" type="number" placeholder="GST Rate % (e.g. 18)">
+</div>
 
 <h3>Items</h3>
 
-<label><input type="checkbox" id="mirchiChk"> Mirchi Powder</label>
-<input id="mirchiQty" type="number" placeholder="Qty">
-<input id="mirchiRate" type="number" placeholder="Rate">
+<div class="item">
+  <label><input type="checkbox" id="mirchiChk"> Mirchi Powder</label>
+  <input id="mirchiQty" type="number" placeholder="Qty">
+  <input id="mirchiRate" type="number" placeholder="Rate">
+</div>
 
-<br><br>
+<div class="item">
+  <label><input type="checkbox" id="haldiChk"> Haldi Powder</label>
+  <input id="haldiQty" type="number" placeholder="Qty">
+  <input id="haldiRate" type="number" placeholder="Rate">
+</div>
+
+<div class="item">
+  <label><input type="checkbox" id="dhaniyaChk"> Dhaniya Powder</label>
+  <input id="dhaniyaQty" type="number" placeholder="Qty">
+  <input id="dhaniyaRate" type="number" placeholder="Rate">
+</div>
 
 <button onclick="generateInvoice()">Generate Invoice</button>
 
 <hr>
 
 <div id="invoice">
-  <h2>TAX INVOICE</h2>
 
-  <p>Invoice No: <span id="oInv"></span></p>
-  <p>Date: <span id="oDate"></span></p>
-  <p>Customer: <span id="oCust"></span></p>
-  <p>GSTIN: <span id="oGST"></span></p>
+  <h2 class="center">TAX INVOICE</h2>
+
+  <p><b>Seller:</b> Shankar Industries</p>
+  <p><b>GSTIN:</b> 27BAOPP6429B1ZI</p>
+
+  <p><b>Customer:</b> <span id="outCust"></span></p>
+  <p><b>Customer GSTIN:</b> <span id="outGST"></span></p>
+  <p><b>Invoice No:</b> <span id="outInv"></span></p>
+  <p><b>Date:</b> <span id="outDate"></span></p>
 
   <table>
     <thead>
@@ -46,16 +65,21 @@
         <th>Amount</th>
       </tr>
     </thead>
-    <tbody id="rows"></tbody>
+    <tbody id="itemRows"></tbody>
   </table>
 
-  <p>Taxable: ₹<span id="oTax"></span></p>
-  <p id="cgstLine">CGST: ₹<span id="oCGST"></span></p>
-  <p id="sgstLine">SGST: ₹<span id="oSGST"></span></p>
-  <p id="igstLine">IGST: ₹<span id="oIGST"></span></p>
+  <table class="summary">
+    <tr><td>Taxable Value</td><td id="outTaxable"></td></tr>
+    <tr id="cgstRow"><td>CGST</td><td id="outCGST"></td></tr>
+    <tr id="sgstRow"><td>SGST</td><td id="outSGST"></td></tr>
+    <tr id="igstRow"><td>IGST</td><td id="outIGST"></td></tr>
+    <tr class="grand"><td>Grand Total</td><td id="outGrand"></td></tr>
+  </table>
 
-  <h3>Grand Total: ₹<span id="oGrand"></span></h3>
 </div>
+
+<button onclick="previewPDF()">Preview PDF</button>
+<button onclick="savePDF()">Save PDF</button>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
