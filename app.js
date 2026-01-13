@@ -2,63 +2,65 @@ const { jsPDF } = window.jspdf;
 
 function generateInvoice() {
 
-  // Basic details
-  iinv.innerText = invNo.value;
-  idate.innerText = invDate.value;
-  icust.innerText = custName.value;
-  icgst.innerText = custGST.value;
-  icaddr.innerText = custAddr.value;
+  // Output basic details
+  invOut.innerText = invNo.value;
+  dateOut.innerText = invDate.value;
+  custOut.innerText = custName.value;
+  addrOut.innerText = custAddr.value;
+  gstOut.innerText = custGST.value;
 
-  rows.innerHTML = "";
-  let taxable = 0;
+  itemRows.innerHTML = "";
+  let taxableAmount = 0;
 
-  function addItem(name, hsn, chk, qty, rate) {
-    if (chk.checked && qty.value && rate.value) {
-      const amt = qty.value * rate.value;
-      taxable += amt;
+  function addItem(name, hsn, checked, qty, rate) {
+    if (checked && qty > 0 && rate > 0) {
+      const amt = qty * rate;
+      taxableAmount += amt;
 
-      rows.innerHTML += `
+      itemRows.innerHTML += `
         <tr>
           <td>${name}</td>
           <td>${hsn}</td>
-          <td>${qty.value}</td>
-          <td>${rate.value}</td>
+          <td>${qty}</td>
+          <td>${rate}</td>
           <td>${amt.toFixed(2)}</td>
         </tr>`;
     }
   }
 
-  addItem("Mirchi Powder", "09042211", aCheck, aQty, aRate);
-  addItem("Haldi Powder", "09103030", bCheck, bQty, bRate);
-  addItem("Dhaniya Powder", "09092200", cCheck, cQty, cRate);
+  addItem("Mirchi Powder", "09042211", aCheck.checked, +aQty.value, +aRate.value);
+  addItem("Haldi Powder", "09103030", bCheck.checked, +bQty.value, +bRate.value);
+  addItem("Dhaniya Powder", "09092200", cCheck.checked, +cQty.value, +cRate.value);
 
-  const rate = Number(gstRate.value || 0);
+  const gstRate = Number(gstRateInput.value) || 0;
+  const gstin = (custGST.value || "").trim();
+
   let cgst = 0, sgst = 0, igst = 0;
 
-  const gstin = custGST.value || "";
+  // Reset rows visibility
+  cgstRow.style.display = "none";
+  sgstRow.style.display = "none";
+  igstRow.style.display = "none";
 
   if (gstin && !gstin.startsWith("27")) {
     // IGST
-    igst = taxable * rate / 100;
-    cgstRow.style.display = "none";
-    sgstRow.style.display = "none";
+    igst = taxableAmount * gstRate / 100;
     igstRow.style.display = "table-row";
   } else {
     // CGST + SGST
-    cgst = taxable * (rate / 2) / 100;
-    sgst = taxable * (rate / 2) / 100;
+    cgst = taxableAmount * (gstRate / 2) / 100;
+    sgst = taxableAmount * (gstRate / 2) / 100;
     cgstRow.style.display = "table-row";
     sgstRow.style.display = "table-row";
-    igstRow.style.display = "none";
   }
 
-  const grand = taxable + cgst + sgst + igst;
+  const grandTotal = taxableAmount + cgst + sgst + igst;
 
-  taxable.innerText = taxable.toFixed(2);
-  cgst.innerText = cgst.toFixed(2);
-  sgst.innerText = sgst.toFixed(2);
-  igst.innerText = igst.toFixed(2);
-  grand.innerText = grand.toFixed(2);
+  taxableOut.innerText = taxableAmount.toFixed(2);
+  cgstOut.innerText = cgst.toFixed(2);
+  sgstOut.innerText = sgst.toFixed(2);
+  igstOut.innerText = igst.toFixed(2);
+  grandOut.innerText = grandTotal.toFixed(2);
 }
 
 function createPDF(openOnly) {
@@ -67,17 +69,9 @@ function createPDF(openOnly) {
     const imgWidth = 190;
     const imgHeight = canvas.height * imgWidth / canvas.width;
     pdf.addImage(canvas.toDataURL("image/png"), "PNG", 10, 10, imgWidth, imgHeight);
-
-    openOnly
-      ? pdf.output("dataurlnewwindow")
-      : pdf.save(`Invoice_${iinv.innerText}.pdf`);
+    openOnly ? pdf.output("dataurlnewwindow") : pdf.save("Invoice.pdf");
   });
 }
 
-function previewPDF() {
-  createPDF(true);
-}
-
-function savePDF() {
-  createPDF(false);
-}
+function previewPDF() { createPDF(true); }
+function savePDF() { createPDF(false); }
