@@ -1,0 +1,30 @@
+body {
+  font-family: Arial;
+  padding: 10px;
+}
+
+input {
+  width: 95%;
+  margin: 5px 0;
+  padding: 6px;
+}
+
+.item {
+  border: 1px solid #ccc;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+  text-align: center;
+}
+
+.center {
+  text-align: center;
+}

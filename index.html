@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Offline Sales Invoice</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+<h2>Sales Invoice Generator</h2>
+
+<!-- INPUT FORM -->
+<div class="form">
+  <input id="invNo" placeholder="Invoice No">
+  <input id="invDate" type="date">
+  <input id="custName" placeholder="Customer Name">
+  <input id="custGST" placeholder="Customer GSTIN">
+
+  <h3>Items</h3>
+
+  <div class="item">
+    <input type="checkbox" id="aCheck"> Item A
+    <input type="number" id="aQty" placeholder="Qty">
+    <input type="number" id="aRate" placeholder="Rate">
+  </div>
+
+  <div class="item">
+    <input type="checkbox" id="bCheck"> Item B
+    <input type="number" id="bQty" placeholder="Qty">
+    <input type="number" id="bRate" placeholder="Rate">
+  </div>
+
+  <div class="item">
+    <input type="checkbox" id="cCheck"> Item C
+    <input type="number" id="cQty" placeholder="Qty">
+    <input type="number" id="cRate" placeholder="Rate">
+  </div>
+
+  <button onclick="generateInvoice()">Generate Invoice</button>
+</div>
+
+<hr>
+
+<!-- INVOICE TEMPLATE -->
+<div id="invoice">
+  <h2 class="center">TAX INVOICE</h2>
+
+  <p>Seller: ABC Traders</p>
+  <p>GSTIN: 27ABCDE1234F1Z5</p>
+
+  <p>Customer: <span id="icust"></span></p>
+  <p>GSTIN: <span id="icgst"></span></p>
+  <p>Invoice No: <span id="iinv"></span></p>
+  <p>Date: <span id="idate"></span></p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Qty</th>
+        <th>Rate</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+
+  <h3>Total ₹ <span id="itotal"></span></h3>
+</div>
+
+<button onclick="previewPDF()">Preview PDF</button>
+<button onclick="savePDF()">Save Final Invoice</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
